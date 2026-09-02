@@ -141,7 +141,10 @@ The three now-unused stock pockets (raised cone + 2.08 mm bore) are shaved
 flush with the R18 bowl and plugged, so the bowl is a clean sphere again
 (`REMOVE_STOCK_POCKETS = True`; set to `False` to keep them). The plug of the
 old P2 pocket is clipped to the slot volume, so the finger slot the pocket had
-broken into keeps its exact stock outline. Verified on the output mesh: no
+broken into keeps its exact stock outline. kepeo's case also carries a small
+external boss behind each ceramic pocket; the one behind P2 is a square bump
+beside the slot on the outside of the shell and is shaved flush (the P1 one is
+buried in the pillar wall, the P3 one merges into the base ring, both stay). Verified on the output mesh: no
 surface closer than 17.998 mm to the bowl centre remains at any old pocket,
 and probe spheres along all three old bore axes are 100 % inside solid.
 
@@ -172,8 +175,9 @@ exactly as before.
 ## Seat geometry (per seat)
 
 * Local boss: 11 mm cylinder along the contact ray from the bowl wall out to
-  t = 24.5, with a 1.5 mm 45 deg flare where it meets the outer shell and a 0.5 mm
-  chamfer on the end. It never intrudes inside the R18 bowl.
+  t = 24.5, with a 1.5 mm 45 deg flare that starts where its wide end meets the
+  R19.4 outer shell (so it is joined to the shell all the way round) and a
+  0.5 mm chamfer on the end. It never intrudes inside the R18 bowl.
 * Cap bore: **9.1 mm nominal, modelled 8.95, ream with a 9.0 mm drill**, from the
   bowl surface down to the hard step at t = 17.85.
 * Washer bore: **8.6 mm nominal, modelled 8.45, ream with an 8.5 mm drill**, from

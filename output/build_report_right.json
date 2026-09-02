@@ -126,7 +126,7 @@
   ]
  },
  "case_stl": "keyball_ptfe_seat_case_right.stl",
- "case_volume_mm3": 9926.655041551212,
+ "case_volume_mm3": 9841.052453584784,
  "case_mesh_manifold": "Error.NoError",
  "case_mesh_bodies": 1,
  "stock_volume_mm3": 9084.716582647932,
@@ -157,7 +157,7 @@
     "mesh_measured": {
      "t_floor": 23.350001048185888,
      "washer_bore_dia": 8.449791406536578,
-     "cap_bore_dia": 8.949794068271185,
+     "cap_bore_dia": 8.94979417482444,
      "t_step": 17.85000014390715,
      "implied_ball_center_t_fresh": 19.350001048185888,
      "implied_ball_center_t_bedded": 19.500001048185887
@@ -189,7 +189,7 @@
     "mesh_measured": {
      "t_floor": 23.34999907382907,
      "washer_bore_dia": 8.449791515555058,
-     "cap_bore_dia": 8.949778238531024,
+     "cap_bore_dia": 8.94977823946595,
      "t_step": 17.85000016787597,
      "implied_ball_center_t_fresh": 19.34999907382907,
      "implied_ball_center_t_bedded": 19.49999907382907
@@ -221,7 +221,7 @@
     "mesh_measured": {
      "t_floor": 23.349999621265827,
      "washer_bore_dia": 8.449833066676591,
-     "cap_bore_dia": 8.949795116684605,
+     "cap_bore_dia": 8.949795125942938,
      "t_step": 17.85000029832514,
      "implied_ball_center_t_fresh": 19.349999621265827,
      "implied_ball_center_t_bedded": 19.499999621265825
@@ -316,8 +316,8 @@
    }
   },
   "cap_pass": true,
-  "added_volume_mm3": 1034.206277379172,
-  "removed_volume_mm3": 192.26939457175135,
+  "added_volume_mm3": 955.2411270916382,
+  "removed_volume_mm3": 198.9068416073466,
   "added_material_bounds": [
    [
     55.50431823730469,
@@ -339,7 +339,7 @@
     "bounds": [
      [
       71.04865264892578,
-      -97.23200988769531,
+      -97.22905731201172,
       1.899999976158142
      ],
      [
@@ -380,7 +380,7 @@
       3.299999952316284
      ]
     ],
-    "modified_volume_mm3": 0.0,
+    "modified_volume_mm3": -1.4743029827050483e-08,
     "pass_": true
    },
    "sensor_aperture": {
@@ -396,7 +396,7 @@
       25.5
      ]
     ],
-    "modified_volume_mm3": 4.1427822505824e-08,
+    "modified_volume_mm3": 2.2842285470521992e-10,
     "pass_": true
    },
    "finger_slot": {
@@ -463,7 +463,7 @@
   "backing": 1.1499999999999986
  },
  "case_step": "keyball_ptfe_seat_case_right.step",
- "case_step_volume_mm3": 9926.65729317866,
- "case_step_size_MB": 54.710844,
- "build_seconds": 227.44416284561157
+ "case_step_volume_mm3": 9841.009514470445,
+ "case_step_size_MB": 53.972668,
+ "build_seconds": 218.78701448440552
 }

@@ -92,6 +92,11 @@ CLEARANCE_MIN = 0.3
 REMOVE_STOCK_POCKETS = True   # plug the old 2 mm bores and shave the raised cones flush with the R18 bowl
 POCKET_PLUG_R = 1.15
 POCKET_SHAVE_R = 2.6
+# kepeo's case also has a small external boss behind each ceramic pocket. The one behind P2 is a visible
+# square bump beside the finger slot; it is shaved flush with the R19.4 shell. P1's is buried in the pillar
+# wall and P3's merges into the base ring, so those stay.
+OUTER_BUMP_SHAVE_POCKETS = ["P2"]
+OUTER_BUMP_R = 3.0
 
 # The stock case has a flat (the pillar wall) inside the bowl at x = 95.4 that is only 0.24 mm from
 # the trackball once the ball rests at its true centre TB. Everything closer than this to the
@@ -118,7 +123,6 @@ T_WASHER_TOP = CONTACT_R + DROP - BEDDING_BIAS             # 21.35
 T_FLOOR = T_WASHER_TOP + WASHER_T                          # 23.35
 T_STEP = T_WASHER_TOP - CAP_STEP_ABOVE_WASHER              # 17.85
 T_END = T_FLOOR + BACKING_MIN + BACKING_EXTRA              # 24.5
-T_FLARE0 = 19.0                                            # flare starts inside the shell wall
 CB_R_MODEL = (CB_D - PRINT_UNDERSIZE) / 2
 CAPBORE_R_MODEL = (CAP_BORE_D - PRINT_UNDERSIZE) / 2
 BOSS_R = BOSS_D / 2
@@ -178,8 +182,11 @@ def seat_tools(C, u, Cbowl):
     """Return dict of B-rep solids for one seat along ray u from trackball centre C."""
     body = cyl(BOSS_R, STOCK_BOWL_R - 1.0, T_END - BOSS_END_CHAMFER, C, u)
     body = body.fuse(cone(BOSS_R, BOSS_R - BOSS_END_CHAMFER, T_END - BOSS_END_CHAMFER, T_END, C, u))
-    flare = cone(BOSS_R + BOSS_BLEND, BOSS_R, T_FLARE0, T_FLARE0 + BOSS_BLEND, C, u)
-    # the flare only lives outside the stock shell surface; the boss never intrudes into the R18 bowl
+    # the 45 deg flare starts where its wide end meets the outer shell surface (so it is connected to the
+    # shell all the way round) and only lives outside that surface; the boss never intrudes into the R18 bowl
+    off = float((C - Cbowl) @ u)
+    t_flare0 = math.sqrt(STOCK_SHELL_R ** 2 - (BOSS_R + BOSS_BLEND) ** 2) - off - 0.15
+    flare = cone(BOSS_R + BOSS_BLEND, BOSS_R, t_flare0, t_flare0 + BOSS_BLEND, C, u)
     flare = flare.cut(sphere(STOCK_SHELL_R, Cbowl))
     body = body.fuse(flare).cut(sphere(STOCK_BOWL_R, Cbowl)).cut(big_box_below(Z_MIN_NEW))
     cap_bore = cyl(CAPBORE_R_MODEL, BORE_START, T_STEP, C, u)
@@ -214,9 +221,11 @@ def wall_feature_hull(stock, Cbowl, az_window, el_window, side, exclude_axes=(),
     return trimesh.convex.convex_hull(pts)
 
 
-def pocket_tools(Cbowl, dvec, t_floor):
+def pocket_tools(Cbowl, dvec, t_floor, outer_bump=False):
     plug = cyl(POCKET_PLUG_R, STOCK_BOWL_R - 0.4, t_floor + 0.25, Cbowl, dvec)
     shave = cyl(POCKET_SHAVE_R, STOCK_BOWL_R - 2.0, STOCK_BOWL_R + 0.02, Cbowl, dvec).intersect(sphere(STOCK_BOWL_R, Cbowl))
+    if outer_bump:   # the stock external boss behind the pocket: everything outside the R19.4 shell near the axis
+        shave = shave.fuse(cyl(OUTER_BUMP_R, STOCK_SHELL_R - 0.02, STOCK_SHELL_R + 3.0, Cbowl, dvec).cut(sphere(STOCK_SHELL_R, Cbowl)))
     return dict(plug=plug, shave=shave)
 
 
@@ -473,7 +482,8 @@ def build(side, outdir, do_step=True, meas_path="stock_measurements.json", stock
     ptools = []
     if REMOVE_STOCK_POCKETS:
         for p in meas["pockets"]:
-            ptools.append(pocket_tools(Cbowl, np.array(p["axis_dir"]), p["t_floor_from_bowl_center"]))
+            ptools.append(pocket_tools(Cbowl, np.array(p["axis_dir"]), p["t_floor_from_bowl_center"],
+                                       outer_bump=p["name"] in OUTER_BUMP_SHAVE_POCKETS))
     envelope = [sphere(TRACKBALL_D / 2 + ENVELOPE_CLEARANCE, c) for c in (Ctb, Ctb_fresh)]
     slot_hull_tm = wall_feature_hull(stock, Cbowl, SLOT_AZ_WINDOW, SLOT_EL_WINDOW, side,
                                      exclude_axes=[np.array(p["axis_dir"]) for p in meas["pockets"]])
@@ -619,7 +629,7 @@ def build(side, outdir, do_step=True, meas_path="stock_measurements.json", stock
             d = p - Cbowl
             t = d @ dv
             rho = np.linalg.norm(d - t * dv)
-            if 15.5 <= t <= 19.6 and rho <= POCKET_SHAVE_R + 0.3:
+            if 15.5 <= t <= 22.6 and rho <= max(POCKET_SHAVE_R, OUTER_BUMP_R) + 0.3:
                 return True
         return False
 
@@ -664,7 +674,7 @@ def build(side, outdir, do_step=True, meas_path="stock_measurements.json", stock
     # the shell merges into the base ring, so its plug legitimately fills a bore inside that region
     pocket_zone = None
     for pk in meas["pockets"]:
-        z = tm_to_manifold(solid_to_trimesh(cyl(POCKET_SHAVE_R + 0.3, 15.5, 19.6, Cbowl, np.array(pk["axis_dir"]))))
+        z = tm_to_manifold(solid_to_trimesh(cyl(max(POCKET_SHAVE_R, OUTER_BUMP_R) + 0.3, 15.5, 22.6, Cbowl, np.array(pk["axis_dir"]))))
         pocket_zone = z if pocket_zone is None else pocket_zone + z
     prot_res = {}
     for name, region in protected.items():
