@@ -47,12 +47,16 @@ BEDDING_BIAS = 0.15         # washer face modelled this much closer to the track
 # Contact positions on the CONTACT_R sphere, in the STL frame of the RIGHT-hand
 # case (az measured in the XY plane from +X towards +Y, el above the XY plane).
 # Stock pockets were at (az,el) = (-3.1,+27.3), (123.5,+8.6), (-101.7,-60.9).
-# Those cannot be reused for a 24.5 mm deep seat stack (see README, "Why the
-# contacts moved"), so the three seats are re-laid-out below the equator:
+# A 24.5 mm deep seat stack cannot go anywhere the stock pockets are: the right
+# side (az -45..+45) is the sensor compartment (the Keyball sensor board stands
+# vertically inside the "pillar"), the row of switches behind the ball blocks
+# az 45..140 below the equator, and the mounting plane limits the front to
+# el >= -32. The contact triangle is therefore rotated so that one contact sits
+# above the equator at the back (as in the stock case) - see layout_search.py.
 SEATS = [
-    dict(name="S1", az=12.0,   el=-25.0, note="right, into the hollow thumb-rest pillar; replaces stock P1"),
-    dict(name="S2", az=153.0,  el=-28.0, note="back-left, between the wall end and the slot; replaces stock P2"),
-    dict(name="S3", az=-110.0, el=-32.0, note="front, just under the low front rim; replaces stock P3"),
+    dict(name="S1", az=-58.0,  el=-30.0, note="front-right, just under the low front rim (short stub proud of the rim); replaces stock P3"),
+    dict(name="S2", az=50.0,   el=27.0,  note="back, above the equator on the high back wall, boss stands off the shell above the key row; replaces stock P1"),
+    dict(name="S3", az=158.0,  el=-30.0, note="back-left at the end of the left wall, clear of the slot; replaces stock P2"),
 ]
 
 # seat stack, distances measured along the contact ray from the trackball centre
@@ -360,6 +364,25 @@ def contact_forces(us):
     return F
 
 
+def holding_capacity(us):
+    """largest horizontal push (in units of the trackball weight), in the worst direction, that the
+    three contacts can resist before one of them unloads (stock case: 0.42)"""
+    N = np.array([-u for u in us]).T
+    worst = 1e9
+    for phi in np.linspace(0, 2 * np.pi, 72, endpoint=False):
+        d = np.array([np.cos(phi), np.sin(phi), 0.0])
+        lo, hi = 0.0, 5.0
+        for _ in range(30):
+            mid = (lo + hi) / 2
+            F = np.linalg.solve(N, np.array([0, 0, 1.0]) + mid * d)
+            if np.all(F > 0):
+                lo = mid
+            else:
+                hi = mid
+        worst = min(worst, lo)
+    return worst
+
+
 def measure_seat_from_mesh(tm, C, u):
     """Re-measure one built seat from the output mesh: floor plane and washer-bore radius."""
     fc, fn, fa = tm.triangles_center, tm.face_normals, tm.area_faces
@@ -507,10 +530,13 @@ def build(side, outdir, do_step=True, meas_path="stock_measurements.json", stock
             spreads[f"{a['name']}-{b['name']}"] = dict(azimuth_deg=daz, angle_3d_deg=ang3d)
     chk["contact_spread"] = spreads
     chk["contact_spread_pass"] = all(v["azimuth_deg"] >= 90 for v in spreads.values())
-    chk["all_below_equator"] = all(s["el"] < 0 for s in seats)
+    chk["all_below_equator"] = all(s["el"] < 0 for s in seats)      # informational: the stock case has two contacts above it
     F = contact_forces([s["u"] for s in seats])
     chk["contact_forces_x_weight"] = dict(zip([s["name"] for s in seats], F.tolist()))
     chk["gravity_stable"] = bool(np.all(F > 0))
+    chk["max_contact_load_x_weight"] = float(F.max())
+    chk["lateral_holding_x_weight"] = float(holding_capacity([s["u"] for s in seats]))
+    chk["loads_pass"] = bool(np.all(F > 0) and F.max() <= 2.0)
 
     # 2. trackball centre in the fresh (biased) state
     chk["trackball_center_bedded"] = Ctb.tolist()
@@ -625,10 +651,12 @@ def build(side, outdir, do_step=True, meas_path="stock_measurements.json", stock
     pil_sel = (stock.triangles_center[:, 0] > 96.0) if side == "right" else (stock.triangles_center[:, 0] < -96.0)
     pillar_hull = trimesh.convex.convex_hull(stock.vertices[np.unique(stock.faces[pil_sel])])
     protected = dict(
-        sensor_window_bore=zcyl_tm(Cbowl[0], Cbowl[1], 6.95, 1.9, 3.42),
+        base_hole_14mm=zcyl_tm(Cbowl[0], Cbowl[1], 6.95, 1.9, 3.42),
+        # the sensor board stands vertically inside the pillar: lens + chip + board + header live here
+        sensor_compartment=box_tm(96.7, 106.5, -101.6, -79.0, 1.9, 32.0),
         base_ring_and_screw_ears=manifold_to_tm(tm_to_manifold(box_tm(Cbowl[0] - 12, Cbowl[0] + 13.5, Cbowl[1] - 11, Cbowl[1] + 11, 1.9, 3.3))
                                                 - tm_to_manifold(zcyl_tm(Cbowl[0], Cbowl[1], 7.05, 1.8, 3.4))),
-        hex_pocket=box_tm(95.0, 97.0, -93.0, -87.5, 17.5, 25.5),
+        sensor_aperture=box_tm(94.9, 97.0, -93.0, -87.5, 17.5, 25.5),
         finger_slot=manifold_to_tm(tm_to_manifold(slot_hull_tm) - tm_to_manifold(solid_to_trimesh(sphere(STOCK_BOWL_R, Cbowl)))),
         pillar_exterior=manifold_to_tm(tm_to_manifold(box_tm(96.5, 111.0, -105.0, -76.0, 1.9, 37.0)) - tm_to_manifold(pillar_hull)),
     )
@@ -673,13 +701,14 @@ def build(side, outdir, do_step=True, meas_path="stock_measurements.json", stock
     chk["backing"] = back_ok
     chk["backing_pass"] = all(b["backing_solid"] and b["bore_open"] for b in back_ok)
 
-    chk["overall_pass"] = all([all(s["pass_19p5"] for s in seat_checks), chk["contact_spread_pass"], chk["all_below_equator"],
-                               chk["gravity_stable"], chk["trackball_case_clearance_pass_bedded"], chk["trackball_case_clearance_pass_fresh"],
+    chk["overall_pass"] = all([all(s["pass_19p5"] for s in seat_checks), chk["contact_spread_pass"],
+                               chk["gravity_stable"], chk["loads_pass"], chk["trackball_case_clearance_pass_bedded"], chk["trackball_case_clearance_pass_fresh"],
                                chk["cap_pass"], chk["added_material_zmin_pass"], chk["modifications_confined_pass"],
                                chk["protected_regions_pass"], chk["backing_pass"]])
     report["checks"] = chk
     print("checks:")
-    for k in ["contact_spread_pass", "all_below_equator", "gravity_stable", "trackball_case_clearance_pass_bedded",
+    print(f"  contact loads x weight: {chk['contact_forces_x_weight']}  max {chk['max_contact_load_x_weight']:.2f}  lateral holding {chk['lateral_holding_x_weight']:.2f}")
+    for k in ["contact_spread_pass", "all_below_equator", "gravity_stable", "loads_pass", "trackball_case_clearance_pass_bedded",
               "trackball_case_clearance_pass_fresh", "cap_pass", "added_material_zmin_pass", "modifications_confined_pass",
               "protected_regions_pass", "backing_pass", "overall_pass"]:
         print(f"  {k}: {chk[k]}")

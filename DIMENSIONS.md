@@ -54,14 +54,14 @@ Ball underside to floor: **1.50 mm** as built (fresh), 1.35 mm once the ball has
 
 | seat | az / el (deg) | ray direction | ball centre, bedded | dist. from TB | replaces | why here |
 |---|---|---|---|---|---|---|
-| S1 | 12.0 / -25.0 | (0.8865, 0.1884, -0.4226) | (95.4438, -86.4083, 11.5798) | **19.5000** | replaces stock P1 | right, into the hollow thumb-rest pillar |
-| S2 | 153.0 / -28.0 | (-0.7867, 0.4008, -0.4695) | (62.8161, -82.2662, 10.6662) | **19.5000** | replaces stock P2 | back-left, between the wall end and the slot |
-| S3 | -110.0 / -32.0 | (-0.2900, -0.7969, -0.5299) | (72.5010, -105.6224, 9.4874) | **19.5000** | replaces stock P3 | front, just under the low front rim |
+| S1 | -58.0 / -30.0 | (0.4589, -0.7344, -0.5000) | (87.1060, -104.4042, 10.0709) | **19.5000** | replaces stock P3 | front-right, just under the low front rim (short stub proud of the rim) |
+| S2 | 50.0 / 27.0 | (0.5727, 0.6826, 0.4540) | (89.3252, -76.7730, 28.6737) | **19.5000** | replaces stock P1 | back, above the equator on the high back wall, boss stands off the shell above the key row |
+| S3 | 158.0 / -30.0 | (-0.8030, 0.3244, -0.5000) | (62.4992, -83.7566, 10.0709) | **19.5000** | replaces stock P2 | back-left at the end of the left wall, clear of the slot |
 
 Fresh (biased) centres are 0.15 mm closer to TB along the same rays:
-* S1: (95.3108, -86.4366, 11.6432)  (19.350 from TB)
-* S2: (62.9341, -82.3263, 10.7366)  (19.350 from TB)
-* S3: (72.5446, -105.5029, 9.5669)  (19.350 from TB)
+* S1: (87.0372, -104.2940, 10.1459)  (19.350 from TB)
+* S2: (89.2393, -76.8754, 28.6056)  (19.350 from TB)
+* S3: (62.6196, -83.8053, 10.1459)  (19.350 from TB)
 
 Re-measured from the exported STL (floor plane and bore cylinders fitted to the output mesh):
 
@@ -75,14 +75,14 @@ Contact spread:
 
 | pair | azimuth difference | 3-D angle between rays |
 |---|---|---|
-| S1-S2 | 141.0 deg | 115.1 deg |
-| S1-S3 | 122.0 deg | 100.6 deg |
-| S2-S3 | 97.0 deg | 80.9 deg |
+| S1-S2 | 108.0 deg | 117.7 deg |
+| S1-S3 | 144.0 deg | 110.9 deg |
+| S2-S3 | 108.0 deg | 117.7 deg |
 
-All azimuth spreads >= 90 deg: PASS. All contacts below the equator (el < 0): PASS.
-Static contact loads with the keyboard flat (frictionless, gravity only), in units of the trackball weight: S1 = 0.84, S2 = 0.73, S3 = 0.57 -> all positive, the ball is held: PASS.
+All azimuth spreads >= 90 deg: PASS. All contacts below the horizontal equator: no - S2 sits above it at the back, as the stock P1/P2 do (see README, why).
+Static contact loads with the keyboard flat (frictionless, gravity only), in units of the trackball weight: S1 = 1.37, S2 = 0.83, S3 = 1.37 -> all positive, the ball is held: PASS; largest load 1.37 (stock 1.78). Lateral holding capacity (largest horizontal push in the worst direction before a contact unloads): **0.54 x ball weight** (stock layout: 0.42).
 
-Trackball centre when the seats are fresh (all three balls 0.15 mm high): (78.1455, -90.1035, 20.1376), i.e. TB + (-0.0115, -0.0208, 0.3167); it settles onto TB as the PTFE beds in.
+Trackball centre when the seats are fresh (all three balls 0.15 mm high): (77.8925, -90.3980, 20.3206), i.e. TB + (-0.2645, -0.3152, 0.4997); it settles onto TB as the PTFE beds in.
 
 ## 4. Clearance checks
 
@@ -93,7 +93,7 @@ Trackball centre when the seats are fresh (all three balls 0.15 mm high): (78.14
 | state | min gap trackball -> case | where (az/el from TB) | >= 0.3 |
 |---|---|---|---|
 | bedded | 0.359 | 4 / -5 | PASS |
-| fresh | 0.380 | 7 / 1 | PASS |
+| fresh | 0.647 | -7 / -0 | PASS |
 
 The only things that touch the trackball are the three 5 mm balls (by design).
 
@@ -101,7 +101,7 @@ The only things that touch the trackball are the three 5 mm balls (by design).
 
 | state | cap underside -> 5 mm ball (min) | ball radius at the cap plane | hole radial clearance | cap top -> trackball (min, worst seat) | pass |
 |---|---|---|---|---|---|
-| fresh | 0.313 | 2.000 | 0.200 | 0.491 | PASS |
+| fresh | 0.313 | 2.000 | 0.200 | 0.483 | PASS |
 | bedded | 0.463 | 1.878 | 0.322 | 0.343 | PASS |
 
 Cap OD variants [9.1, 9.2, 9.3]; the trackball sag at the cap rim (rho = 4.65) is 0.65 mm, so the rim is the least critical point; the hub next to the hole is the critical one and is kept at 0.65 mm thick.
@@ -117,16 +117,17 @@ Cap OD variants [9.1, 9.2, 9.3]; the trackball sag at the cap rim (rho = 4.65) i
 
 The difference between the new and the stock solid was computed as two meshes (added material, removed material) and checked:
 
-* added material 986.1 mm^3, removed material 281.3 mm^3 (removed = the bores cut through the stock wall plus the three old raised cones)
+* added material 1034.2 mm^3, removed material 192.3 mm^3 (removed = the bores cut through the stock wall plus the three old raised cones)
 * every changed region lies inside a seat zone or an old pocket zone: PASS (0 stray regions)
-* lowest point of any added material: z = 2.439 (mounting plane z = 2.0, limit 2.2): PASS
-* sensor_window_bore: modified volume inside the protected box 0.0000 mm^3 -> PASS
+* lowest point of any added material: z = 3.058 (mounting plane z = 2.0, limit 2.2): PASS
+* base_hole_14mm: modified volume inside the protected box 0.0000 mm^3 -> PASS
+* sensor_compartment: modified volume inside the protected box 0.0000 mm^3 -> PASS
 * base_ring_and_screw_ears: modified volume inside the protected box 0.0000 mm^3 -> PASS
-* hex_pocket: modified volume inside the protected box 0.0000 mm^3 -> PASS
+* sensor_aperture: modified volume inside the protected box 0.0000 mm^3 -> PASS
 * finger_slot: modified volume inside the protected box 0.0000 mm^3 -> PASS
 * pillar_exterior: modified volume inside the protected box 0.0000 mm^3 -> PASS
 
-Added-material bounding box: (55.80, -112.63, 2.00) .. (102.19, -74.05, 30.60). Stock envelope: (60.85, -106.12, 2.00) .. (110.10, -70.78, 35.75).
+Added-material bounding box: (55.50, -111.47, 2.00) .. (96.41, -69.68, 35.62). Stock envelope: (60.85, -106.12, 2.00) .. (110.10, -70.78, 35.75).
 
 ## 5. Overall: PASS
 

@@ -1,10 +1,5 @@
 # Keyball 34 mm trackball case - PTFE-seat bearing upgrade
 
-> **STOP - do not print this revision.** The Keyball sensor board stands vertically inside the
-> "pillar" (it is the sensor compartment, and the hex-shaped opening in its wall is the sensor
-> aperture). Seat **S1 in this revision runs through that compartment** and would hit the sensor
-> board/lens. The seat layout is being revised; see the discussion in the next commit.
-
 A remix of **kepeo's "Keyball Trackball Case"** (Thingiverse thing:6215791) that
 replaces the three static 2 mm ceramic balls with three **5 mm chrome-steel balls
 resting in the inner edge of thick PTFE washers**. The 34 mm ball rolls on the
@@ -26,8 +21,9 @@ of the stock case is preserved exactly.
 * This remix (everything in `src/`, `output/`, the docs) is also released under
   **CC BY 4.0**. Attribute kepeo for the case and this repository for the
   PTFE-seat modification.
-* The Keyball44 PCB layout (Yowkees/keyball, MIT-licensed hardware files) was
-  used only to check where the neighbouring key switches are.
+* The Keyball61 and Keyball44 PCB layouts and the sensor-board gerbers
+  (Yowkees/keyball) were used only to locate the neighbouring switches and the
+  sensor board relative to the case.
 
 ## What is in the repository
 
@@ -35,6 +31,7 @@ of the stock case is preserved exactly.
 |---|---|
 | `src/ptfe_seat_case.py` | **parametric source** (CadQuery + manifold3d). All parameters at the top: ball diameter, washer ID/OD/thickness, contact radius, bedding bias, per-seat contact angles, boss size, bore undersize, cap dimensions. |
 | `src/measure_stock.py` | reverse-engineers the stock STL: bowl sphere, the three 2 mm pockets, the trackball centre. Writes `src/stock_measurements.json`. |
+| `src/layout_search.py` | obstacle model (sensor compartment, switches/keycaps from the KiCad files, mounting plane, slot, aperture) and the seat-triple search that produced the layout; `python layout_search.py 5.5 61` or `.. 44`. |
 | `src/write_dimensions.py`, `src/preview.py` | generate `DIMENSIONS.md` and the pictures from the build report. |
 | `output/keyball_ptfe_seat_case_right.stl` / `.step.zip` | modified right-hand case. The STEP is a B-rep with true cylinders/planes for the seats on top of the faceted stock body; at 54 MB it is stored zipped (12 MB), unzip before use |
 | `output/keyball_ptfe_seat_case_left.stl` / `.step.zip` | mirrored left-hand case (same build, mirrored inputs) |
@@ -99,35 +96,46 @@ that is the seats bedding in, not a fault.
 
 ## Why the contacts moved (and where they are now)
 
-The task asked for the stock angular positions by default. That is not
-possible with a 24.5 mm deep seat stack, and the stock layout also has two of
-its three contacts *above* the ball's equator (az/el = -3/+27, 123/+9, -102/-61
-in the STL frame):
+Designed and checked for the **Keyball61**; the Keyball44 uses the same sensor
+board and the same case, and the layout clears its keys too.
 
-* the stock bottom contact (el -61) would put the washer floor and its backing
-  **below the mounting plane, inside the daughterboard** (z = -0.6 and -1.6);
-  any contact steeper than about el -32 does;
-* moving only that contact up makes the ball fall out: with two contacts above
-  the equator the third must be steep to hold the ball (static analysis in the
-  build report);
-* the back of the case sits against the SW15/SW16/SW17 keycaps (from the
-  Keyball44 PCB), the left wall ends at az 160, the low front rim sits at el
-  -31, and the right side is the hollow thumb-rest pillar.
+Two things about the stock case decide where a 24.5 mm deep seat stack can go:
 
-The three seats were therefore re-laid-out **below the equator**, as close to
-the stock azimuths as the constraints allow, all 19.5 mm from TB:
+* **The "pillar" is the sensor compartment.** The Keyball sensor board stands
+  vertically in a 7-pin socket on the main PCB; the pillar houses it, the lens
+  and chip sit in front of it, and the hex-shaped opening in the pillar wall is
+  the **sensor aperture** (the PMW3360 looks sideways at the ball, not up from
+  below - the 14 mm hole in the base is just a hole). From the case sections the
+  compartment (x 96.7..106.5, the full 22.6 mm board width, z 6..30) is
+  completely full, so nothing may enter it. That blocks az -45..+45 at every
+  elevation.
+* **The mounting plane** (z = 2, the case bottoms on the main PCB) limits any
+  seat to el >= -32, and the switch housings of the row behind the ball (SW21
+  and SW22 on the 61, SW15/SW16 on the 44) block az 45..140 below the equator.
+
+What is left below the equator is a 165 deg arc from the back-left round the
+front, and three contacts have to span more than 180 deg or the ball is not
+held. `src/layout_search.py` models the compartment, the switches and keycaps
+(from the KiCad files), the mounting plane, the slot and the aperture, and
+searches all seat triples. The stock case solves the same problem by putting
+two of its three contacts *above* the equator (az/el -3/+27 and 123/+9) and
+the third steeply below (-102/-61); the steep one is impossible for a deep
+seat, so the triangle is rotated the other way:
 
 | seat | az / el | where the boss goes | replaces |
 |---|---|---|---|
-| S1 | +12 / -25 | inside the hollow pillar (no change to the outer envelope); stays 0.6 mm below the hex pocket in the pillar wall | stock P1 |
-| S2 | +153 / -28 | back-left, protrudes 5 mm from the shell toward the F7 key; from the Keyball44 PCB there are ~10 mm to the F7 keycap and ~2.5 mm to the corner of the SW17 keycap behind it | stock P2 |
-| S3 | -110 / -32 | front, just under the low front rim; the top of the 11 mm boss stands ~4 mm proud of the rim as a short stub | stock P3 |
+| S1 | -58 / -30 | front-right, just under the low front rim; the top of the 11 mm boss stands ~4 mm proud of the rim as a short stub, in front of the pillar and clear of the sensor compartment | stock P3 |
+| S2 | +50 / +27 | back, on the high back wall **above the equator**; the boss stands off the outside of the shell above the key row behind the ball (its underside is ~4 mm above the keycap tops, it never enters the compartment) | stock P1 |
+| S3 | +158 / -30 | back-left at the end of the left wall, clear of the finger slot and the SW23/SW24 keycaps | stock P2 |
 
-Azimuth spread 141 / 97 / 122 deg (all >= 90). With the keyboard flat the three
-contacts carry 0.84 / 0.74 / 0.57 of the ball weight (all positive: the ball is
-held by gravity alone, as with any three-point trackball). The seats are all
-on the same 19.5 mm sphere, so the sensor distance does not depend on where they
-are.
+Azimuth spread 108 / 108 / 144 deg (all >= 90), all three ball centres 19.5 mm
+from TB. With the keyboard flat the contacts carry 1.37 / 0.83 / 1.37 of the
+ball weight (stock: 0.86 / 1.08 / 1.78) and the largest horizontal push the
+ball takes before a contact unloads is 0.54 x its weight (stock layout 0.42) -
+the rotated triangle holds the ball at least as well as the stock one. The
+brief asked for all contacts below the equator; that is geometrically
+impossible on this keyboard, and S2 above the equator is the same trick
+kepeo's case already uses.
 
 The three now-unused stock pockets (raised cone + 2.08 mm bore) are shaved
 flush with the R18 bowl and plugged, so the bowl is a clean sphere again
@@ -139,12 +147,13 @@ and probe spheres along all three old bore axes are 100 % inside solid.
 
 ![bowl map](docs/img/bowl_map_stock_vs_new.png)
 
-The oblong through-slot in the back-left wall (az 102-125, 4 x 12 mm) and the
-hex pocket in the pillar wall are kepeo's stock features and are left exactly
-as they were. Mapped onto the Keyball44 PCB, the slot sits under the rear
-corner of the SW17 keycap, at the seam with SW16, which is consistent with a
-keycap clearance notch; the daughterboard height is not in the public files,
-so treat that as a plausible reading, not a confirmed one.
+The oblong through-slot in the back-left wall (az 102-125, 4 x 12 mm) is
+kepeo's stock feature and is left exactly as it was. Mapped onto the PCB it
+sits under the rear corner of the keycap behind it (SW23 on the 61, SW17 on
+the 44), which is consistent with a keycap clearance notch; treat that as a
+plausible reading, not a confirmed one. The hex-shaped opening in the pillar
+wall is the sensor aperture and is untouched (the trackball-envelope trim
+above only skims the flat around it).
 
 One more small change to the stock body: the flat face of the pillar wall
 that shows inside the bowl at x = 95.4 is only 0.24 mm from the trackball once
@@ -154,8 +163,8 @@ R17.35 around TB (and around the fresh-state centre), which takes at most
 0.11 mm off that flat and touches nothing else, so the 0.3 mm clearance holds
 everywhere (`ENVELOPE_CLEARANCE`).
 
-The sensor window, the base ring, the two screw ears, the hex pocket, the
-finger slot and the pillar are byte-for-byte the stock geometry: the checks
+The sensor aperture and compartment, the base ring and its 14 mm hole, the two
+screw ears, the finger slot and the pillar are byte-for-byte the stock geometry: the checks
 compute the added/removed material and verify that none of it lies in those
 regions (`DIMENSIONS.md` 4.4). The case mounts to the stock daughterboard
 exactly as before.
@@ -218,8 +227,9 @@ The seats bed in **~0.1-0.2 mm over the first days**; the floors are biased
 ## Printing
 
 * Case: print in the stock orientation (flat base down, as kepeo's STL is
-  oriented). The three bores are near-horizontal blind holes (axes 25-32 deg
-  below horizontal); their upper side is a small bridge. Either enable
+  oriented). The three bores are near-horizontal blind holes (S1/S3 axes 30 deg
+  below horizontal, S2 27 deg above); their upper side is a small bridge and
+  the S2 boss overhangs the shell at the back. Either enable
   supports inside the three bores, or print without and clean the ceiling of
   each bore with the reamer - the counterbore floors are steep walls and print
   clean either way. 0.4 nozzle, 0.12-0.16 mm layers, 4+ perimeters (the boss

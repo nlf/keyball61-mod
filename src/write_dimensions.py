@@ -121,10 +121,13 @@ A("|---|---|---|")
 for k, v in chk["contact_spread"].items():
     A(f"| {k} | {v['azimuth_deg']:.1f} deg | {v['angle_3d_deg']:.1f} deg |")
 A("")
-A(f"All azimuth spreads >= 90 deg: {ok(chk['contact_spread_pass'])}. All contacts below the equator (el < 0): {ok(chk['all_below_equator'])}.")
+A(f"All azimuth spreads >= 90 deg: {ok(chk['contact_spread_pass'])}. All contacts below the horizontal equator: "
+  f"{'yes' if chk['all_below_equator'] else 'no - S2 sits above it at the back, as the stock P1/P2 do (see README, why)'}.")
 F = chk["contact_forces_x_weight"]
 A(f"Static contact loads with the keyboard flat (frictionless, gravity only), in units of the trackball weight: "
-  + ", ".join(f"{k} = {v:.2f}" for k, v in F.items()) + f" -> all positive, the ball is held: {ok(chk['gravity_stable'])}.")
+  + ", ".join(f"{k} = {v:.2f}" for k, v in F.items()) + f" -> all positive, the ball is held: {ok(chk['gravity_stable'])}; "
+  f"largest load {chk['max_contact_load_x_weight']:.2f} (stock 1.78). Lateral holding capacity (largest horizontal push in the worst "
+  f"direction before a contact unloads): **{chk['lateral_holding_x_weight']:.2f} x ball weight** (stock layout: 0.42).")
 A("")
 A("Trackball centre when the seats are fresh (all three balls 0.15 mm high): "
   f"{v3(chk['trackball_center_fresh'])}, i.e. TB + {v3(chk['trackball_rise_when_fresh'])}; it settles onto TB as the PTFE beds in.")
