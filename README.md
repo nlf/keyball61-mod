@@ -1,5 +1,10 @@
 # Keyball 34 mm trackball case - PTFE-seat bearing upgrade
 
+> **STOP - do not print this revision.** The Keyball sensor board stands vertically inside the
+> "pillar" (it is the sensor compartment, and the hex-shaped opening in its wall is the sensor
+> aperture). Seat **S1 in this revision runs through that compartment** and would hit the sensor
+> board/lens. The seat layout is being revised; see the discussion in the next commit.
+
 A remix of **kepeo's "Keyball Trackball Case"** (Thingiverse thing:6215791) that
 replaces the three static 2 mm ceramic balls with three **5 mm chrome-steel balls
 resting in the inner edge of thick PTFE washers**. The 34 mm ball rolls on the
