@@ -127,8 +127,19 @@ are.
 The three now-unused stock pockets (raised cone + 2.08 mm bore) are shaved
 flush with the R18 bowl and plugged, so the bowl is a clean sphere again
 (`REMOVE_STOCK_POCKETS = True`; set to `False` to keep them). The plug of the
-old P2 pocket is clipped so that it does not enter the finger slot the pocket
-had broken into.
+old P2 pocket is clipped to the slot volume, so the finger slot the pocket had
+broken into keeps its exact stock outline. Verified on the output mesh: no
+surface closer than 17.998 mm to the bowl centre remains at any old pocket,
+and probe spheres along all three old bore axes are 100 % inside solid.
+
+![bowl map](docs/img/bowl_map_stock_vs_new.png)
+
+The oblong through-slot in the back-left wall (az 102-125, 4 x 12 mm) and the
+hex pocket in the pillar wall are kepeo's stock features and are left exactly
+as they were. Mapped onto the Keyball44 PCB, the slot sits under the rear
+corner of the SW17 keycap, at the seam with SW16, which is consistent with a
+keycap clearance notch; the daughterboard height is not in the public files,
+so treat that as a plausible reading, not a confirmed one.
 
 One more small change to the stock body: the flat face of the pillar wall
 that shows inside the bowl at x = 95.4 is only 0.24 mm from the trackball once

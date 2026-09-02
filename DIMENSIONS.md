@@ -117,7 +117,7 @@ Cap OD variants [9.1, 9.2, 9.3]; the trackball sag at the cap rim (rho = 4.65) i
 
 The difference between the new and the stock solid was computed as two meshes (added material, removed material) and checked:
 
-* added material 982.7 mm^3, removed material 281.3 mm^3 (removed = the bores cut through the stock wall plus the three old raised cones)
+* added material 986.1 mm^3, removed material 281.3 mm^3 (removed = the bores cut through the stock wall plus the three old raised cones)
 * every changed region lies inside a seat zone or an old pocket zone: PASS (0 stray regions)
 * lowest point of any added material: z = 2.439 (mounting plane z = 2.0, limit 2.2): PASS
 * sensor_window_bore: modified volume inside the protected box 0.0000 mm^3 -> PASS
@@ -126,7 +126,7 @@ The difference between the new and the stock solid was computed as two meshes (a
 * finger_slot: modified volume inside the protected box 0.0000 mm^3 -> PASS
 * pillar_exterior: modified volume inside the protected box 0.0000 mm^3 -> PASS
 
-Added-material bounding box: (55.80, -112.63, 2.00) .. (102.19, -74.13, 30.60). Stock envelope: (60.85, -106.12, 2.00) .. (110.10, -70.78, 35.75).
+Added-material bounding box: (55.80, -112.63, 2.00) .. (102.19, -74.05, 30.60). Stock envelope: (60.85, -106.12, 2.00) .. (110.10, -70.78, 35.75).
 
 ## 5. Overall: PASS
 

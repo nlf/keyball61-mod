@@ -183,7 +183,7 @@ def seat_tools(C, u, Cbowl):
     return dict(boss=body, cap_bore=cap_bore, washer_bore=washer_bore)
 
 
-def wall_feature_hull(stock, Cbowl, az_window, el_window, side, t_in=17.0, t_out=20.5):
+def wall_feature_hull(stock, Cbowl, az_window, el_window, side, exclude_axes=(), t_in=17.0, t_out=20.5):
     """Convex hull of a through-wall feature (the finger slot): its wall faces are the faces between
     the two shell spheres whose normals are tangential; their vertices are extended radially."""
     fc, fn = stock.triangles_center, stock.face_normals
@@ -198,6 +198,11 @@ def wall_feature_hull(stock, Cbowl, az_window, el_window, side, t_in=17.0, t_out
     cosang = (fn * d).sum(1) / dist
     sel = (dist > STOCK_BOWL_R + 0.05) & (dist < STOCK_SHELL_R - 0.05) & (np.abs(cosang) < 0.3) & \
           (az > az_window[0]) & (az < az_window[1]) & (el > el_window[0]) & (el < el_window[1])
+    # the old P2 pocket bore broke into the slot's corner: its bore walls must not be part of the slot hull
+    for ax in exclude_axes:
+        t = d @ ax
+        rho = np.linalg.norm(d - np.outer(t, ax), axis=1)
+        sel &= ~((rho < POCKET_PLUG_R + 0.6) & (t > STOCK_BOWL_R - 1.0))
     verts = stock.vertices[np.unique(stock.faces[sel])]
     dv = verts - Cbowl
     uu = dv / np.linalg.norm(dv, axis=1)[:, None]
@@ -447,7 +452,8 @@ def build(side, outdir, do_step=True, meas_path="stock_measurements.json", stock
         for p in meas["pockets"]:
             ptools.append(pocket_tools(Cbowl, np.array(p["axis_dir"]), p["t_floor_from_bowl_center"]))
     envelope = [sphere(TRACKBALL_D / 2 + ENVELOPE_CLEARANCE, c) for c in (Ctb, Ctb_fresh)]
-    slot_hull_tm = wall_feature_hull(stock, Cbowl, SLOT_AZ_WINDOW, SLOT_EL_WINDOW, side)
+    slot_hull_tm = wall_feature_hull(stock, Cbowl, SLOT_AZ_WINDOW, SLOT_EL_WINDOW, side,
+                                     exclude_axes=[np.array(p["axis_dir"]) for p in meas["pockets"]])
 
     # --- mesh booleans
     print("mesh booleans (manifold3d) ...")

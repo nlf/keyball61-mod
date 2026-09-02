@@ -69,3 +69,28 @@ for ax, z in zip(axs, (2.6, 6.0, 11.0)):
     ax.set_aspect("equal"); ax.grid(True, lw=0.3); ax.set_title(f"z = {z} slice (grey = stock, black = new)")
 plt.tight_layout(); plt.savefig(os.path.join(out, f"z_slices_{side}.png"), dpi=80)
 print("wrote previews to", out)
+
+# ---- inner-bowl map: stock vs new, seen from the bowl centre (old pockets gone, slot untouched)
+if side == "right":
+    fig, axs = plt.subplots(1, 2, figsize=(20, 8))
+    for ax, (name, m) in zip(axs, (("stock (kepeo)", stock), ("PTFE-seat remix", new))):
+        fc = m.triangles_center
+        d = fc - Cb
+        dist = np.linalg.norm(d, axis=1)
+        u = d / dist[:, None]
+        az = np.degrees(np.arctan2(u[:, 1], u[:, 0])); el = np.degrees(np.arcsin(u[:, 2]))
+        sel = dist < 18.6
+        sc = ax.scatter(az[sel], el[sel], c=dist[sel], s=2, cmap="jet", vmin=17.3, vmax=18.6)
+        for p in meas["pockets"]:
+            ax.annotate(p["name"] + " (old pocket)", (p["az_deg"], p["el_deg"]), xytext=(p["az_deg"] + 8, p["el_deg"] + 10),
+                        arrowprops=dict(arrowstyle="->"), fontsize=9)
+        for s in P.SEATS:
+            ax.annotate(s["name"] + " (new seat)", (s["az"], s["el"]), xytext=(s["az"] + 8, s["el"] - 14),
+                        arrowprops=dict(arrowstyle="->"), fontsize=9, color="purple")
+        ax.annotate("finger slot", (112, -8), xytext=(60, -20), arrowprops=dict(arrowstyle="->"), fontsize=9)
+        ax.annotate("hex pocket / pillar wall flat", (0, 4), xytext=(-60, -40), arrowprops=dict(arrowstyle="->"), fontsize=9)
+        ax.set_title(name + " - inner surface from the bowl centre (colour: distance, mm)", fontsize=10)
+        ax.set_xlabel("azimuth [deg]"); ax.set_ylabel("elevation [deg]"); ax.grid(True, lw=0.3)
+    plt.colorbar(sc, ax=axs, shrink=0.6)
+    plt.savefig(os.path.join(out, "bowl_map_stock_vs_new.png"), dpi=75)
+    print("wrote bowl map")

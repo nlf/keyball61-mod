@@ -126,7 +126,7 @@
   ]
  },
  "case_stl": "keyball_ptfe_seat_case_left.stl",
- "case_volume_mm3": 9788.529594234804,
+ "case_volume_mm3": 9791.981471425368,
  "case_mesh_manifold": "Error.NoError",
  "case_mesh_bodies": 1,
  "stock_volume_mm3": 9087.040112585566,
@@ -313,8 +313,8 @@
    }
   },
   "cap_pass": true,
-  "added_volume_mm3": 982.66142937939,
-  "removed_volume_mm3": 281.1727472801778,
+  "added_volume_mm3": 986.1133065212889,
+  "removed_volume_mm3": 281.1727468062725,
   "added_material_bounds": [
    [
     -102.18991088867188,
@@ -323,7 +323,7 @@
    ],
    [
     -55.79603576660156,
-    -74.57434844970703,
+    -74.05232238769531,
     30.518651962280273
    ]
   ],
@@ -388,12 +388,12 @@
       10.788119316101074
      ],
      [
-      -65.82750701904297,
+      -67.34635925292969,
       -70.34111022949219,
-      24.152334213256836
+      23.30293846130371
      ]
     ],
-    "modified_volume_mm3": 5.989609549080418e-10,
+    "modified_volume_mm3": 5.989852317848469e-10,
     "pass_": true
    },
    "pillar_exterior": {
@@ -444,7 +444,7 @@
   "backing": 1.1499999999999986
  },
  "case_step": "keyball_ptfe_seat_case_left.step",
- "case_step_volume_mm3": 9788.528657976325,
- "case_step_size_MB": 54.456076,
- "build_seconds": 217.45452404022217
+ "case_step_volume_mm3": 9791.97678837881,
+ "case_step_size_MB": 54.33647,
+ "build_seconds": 216.1630618572235
 }
