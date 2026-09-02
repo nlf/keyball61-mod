@@ -1,0 +1,97 @@
+{
+ "source_stl": "../stock/repaired/keyball_trackball_case_right_repaired.stl",
+ "bowl_center": [
+  77.99864922332773,
+  -90.28201299904792,
+  20.001903325742177
+ ],
+ "bowl_radius": 17.99402733142235,
+ "bowl_fit_faces": 8819,
+ "bowl_fit_residual_median": 0.0009884410048854875,
+ "bowl_fit_residual_max": 0.007961179400609808,
+ "pockets": [
+  {
+   "axis_dir": [
+    0.8871476704662645,
+    -0.04760729731835197,
+    0.45902348091173084
+   ],
+   "az_deg": -3.071735914227068,
+   "el_deg": 27.324112444663264,
+   "bore_dia": 2.075765627331927,
+   "bore_fit_rms": 0.024977910418078116,
+   "n_bore_faces": 38,
+   "t_floor_from_bowl_center": 19.047372738602018,
+   "t_mouth_from_bowl_center": 17.510287940063716,
+   "axis_miss_bowl_center": 0.20787368009146326,
+   "ball_center": [
+    94.10234428400521,
+    -91.07212546716008,
+    28.113475424500592
+   ],
+   "ball_center_dist_from_bowl_center": 18.04856986669333,
+   "name": "P1"
+  },
+  {
+   "axis_dir": [
+    -0.5451007419566786,
+    0.8248519841164016,
+    0.14994794235838657
+   ],
+   "az_deg": 123.45859187007967,
+   "el_deg": 8.623909755311361,
+   "bore_dia": 2.0774582078920973,
+   "bore_fit_rms": 0.025007331904338955,
+   "n_bore_faces": 39,
+   "t_floor_from_bowl_center": 19.048554454493274,
+   "t_mouth_from_bowl_center": 17.508672610928752,
+   "axis_miss_bowl_center": 0.11487197247781708,
+   "ball_center": [
+    68.12191679293656,
+    -75.40038818244112,
+    22.600155196343174
+   ],
+   "ball_center_dist_from_bowl_center": 18.04892000832376,
+   "name": "P2"
+  },
+  {
+   "axis_dir": [
+    -0.09869875515062693,
+    -0.4758020883628087,
+    -0.8739970986458173
+   ],
+   "az_deg": -101.719036897875,
+   "el_deg": -60.92650389148536,
+   "bore_dia": 2.0728696027347127,
+   "bore_fit_rms": 0.025202674075177095,
+   "n_bore_faces": 39,
+   "t_floor_from_bowl_center": 19.047534007584076,
+   "t_mouth_from_bowl_center": 17.509927625887023,
+   "axis_miss_bowl_center": 0.22269342909444148,
+   "ball_center": [
+    76.29754894987825,
+    -98.6905279988909,
+    4.122161215891907
+   ],
+   "ball_center_dist_from_bowl_center": 18.048907892675008,
+   "name": "P3"
+  }
+ ],
+ "stock_contact_radius": 18.0,
+ "trackball_center": [
+  78.15701407255757,
+  -90.08276849592126,
+  19.820851155750287
+ ],
+ "trackball_center_residuals": [
+  8.697291775661142e-10,
+  8.661693584599561e-10,
+  8.676579454913735e-10
+ ],
+ "trackball_center_offset_from_bowl_center": 0.3123422573981205,
+ "trackball_center_offset_vector": [
+  0.15836484922984084,
+  0.19924450312666409,
+  -0.1810521699918901
+ ]
+}

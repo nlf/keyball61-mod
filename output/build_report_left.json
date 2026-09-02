@@ -1,0 +1,450 @@
+{
+ "side": "left",
+ "params": {
+  "TRACKBALL_D": 34.0,
+  "BALL_D": 5.0,
+  "WASHER_ID": 3.0,
+  "WASHER_OD": 8.5,
+  "WASHER_T": 2.0,
+  "CONTACT_R": 19.5,
+  "BEDDING_BIAS": 0.15,
+  "BOSS_D": 11.0,
+  "BOSS_BLEND": 1.5,
+  "CB_D": 8.6,
+  "CAP_BORE_D": 9.1,
+  "PRINT_UNDERSIZE": 0.15,
+  "CAP_STEP_ABOVE_WASHER": 3.5,
+  "CAP_HOLE_D": 4.4,
+  "CAP_OD_NOMINAL": 9.2,
+  "CAP_OD_VARIANTS": [
+   9.1,
+   9.2,
+   9.3
+  ],
+  "CAP_RIM_T": 0.5,
+  "CAP_HUB_T": 0.65,
+  "CAP_HUB_R": 2.9,
+  "CAP_CHAMFER_R": 3.7,
+  "Z_MIN_NEW": 2.2,
+  "REMOVE_STOCK_POCKETS": true,
+  "ENVELOPE_CLEARANCE": 0.35
+ },
+ "stack": {
+  "DROP": 2.0,
+  "T_BALL_FRESH": 19.35,
+  "T_BALL_BEDDED": 19.5,
+  "T_WASHER_TOP": 21.35,
+  "T_FLOOR": 23.35,
+  "T_STEP": 17.85,
+  "T_END": 24.5,
+  "CB_DIA_MODELLED": 8.45,
+  "CAP_BORE_DIA_MODELLED": 8.95,
+  "BALL_BOTTOM_TO_FLOOR_FRESH": 1.5,
+  "BALL_BOTTOM_TO_FLOOR_BEDDED": 1.3500000000000014,
+  "BALL_HANG_BELOW_WASHER_FACE": 0.5
+ },
+ "stock": {
+  "bowl_center": [
+   -77.99864922332773,
+   -90.28201299904792,
+   20.001903325742177
+  ],
+  "bowl_radius": 17.99402733142235,
+  "trackball_center": [
+   -78.15701407255757,
+   -90.08276849592126,
+   19.820851155750287
+  ],
+  "trackball_center_offset_from_bowl_center": 0.3123422573981205,
+  "pockets": [
+   {
+    "axis_dir": [
+     -0.8871476704662645,
+     -0.04760729731835197,
+     0.45902348091173084
+    ],
+    "az_deg": -176.92826408577292,
+    "el_deg": 27.324112444663264,
+    "bore_dia": 2.075765627331927,
+    "bore_fit_rms": 0.024977910418078116,
+    "n_bore_faces": 38,
+    "t_floor_from_bowl_center": 19.047372738602018,
+    "t_mouth_from_bowl_center": 17.510287940063716,
+    "axis_miss_bowl_center": 0.20787368009146326,
+    "ball_center": [
+     -94.10234428400521,
+     -91.07212546716008,
+     28.113475424500592
+    ],
+    "ball_center_dist_from_bowl_center": 18.04856986669333,
+    "name": "P1"
+   },
+   {
+    "axis_dir": [
+     0.5451007419566786,
+     0.8248519841164016,
+     0.14994794235838657
+    ],
+    "az_deg": 56.541408129920335,
+    "el_deg": 8.623909755311361,
+    "bore_dia": 2.0774582078920973,
+    "bore_fit_rms": 0.025007331904338955,
+    "n_bore_faces": 39,
+    "t_floor_from_bowl_center": 19.048554454493274,
+    "t_mouth_from_bowl_center": 17.508672610928752,
+    "axis_miss_bowl_center": 0.11487197247781708,
+    "ball_center": [
+     -68.12191679293656,
+     -75.40038818244112,
+     22.600155196343174
+    ],
+    "ball_center_dist_from_bowl_center": 18.04892000832376,
+    "name": "P2"
+   },
+   {
+    "axis_dir": [
+     0.09869875515062693,
+     -0.4758020883628087,
+     -0.8739970986458173
+    ],
+    "az_deg": -78.28096310212501,
+    "el_deg": -60.92650389148536,
+    "bore_dia": 2.0728696027347127,
+    "bore_fit_rms": 0.025202674075177095,
+    "n_bore_faces": 39,
+    "t_floor_from_bowl_center": 19.047534007584076,
+    "t_mouth_from_bowl_center": 17.509927625887023,
+    "axis_miss_bowl_center": 0.22269342909444148,
+    "ball_center": [
+     -76.29754894987825,
+     -98.6905279988909,
+     4.122161215891907
+    ],
+    "ball_center_dist_from_bowl_center": 18.048907892675008,
+    "name": "P3"
+   }
+  ]
+ },
+ "case_stl": "keyball_ptfe_seat_case_left.stl",
+ "case_volume_mm3": 9788.529594234804,
+ "case_mesh_manifold": "Error.NoError",
+ "case_mesh_bodies": 1,
+ "stock_volume_mm3": 9087.040112585566,
+ "checks": {
+  "seats": [
+   {
+    "name": "S1",
+    "az_deg": 168.0,
+    "el_deg": -25.0,
+    "ray_dir": [
+     -0.8865027874162641,
+     0.18843198440409162,
+     -0.42261826174069944
+    ],
+    "note": "right, into the hollow thumb-rest pillar; replaces stock P1",
+    "ball_center_bedded": [
+     -95.44381842717472,
+     -86.40834480004148,
+     11.579795051806647
+    ],
+    "ball_center_fresh": [
+     -95.31084300906228,
+     -86.43660959770209,
+     11.643187791067751
+    ],
+    "dist_from_trackball_center_bedded": 19.499999999999996,
+    "dist_from_trackball_center_fresh": 19.35,
+    "mesh_measured": {
+     "t_floor": 23.350000886614165,
+     "washer_bore_dia": 8.449833340335996,
+     "cap_bore_dia": 8.94976056583935,
+     "t_step": 17.850000328361883,
+     "implied_ball_center_t_fresh": 19.350000886614165,
+     "implied_ball_center_t_bedded": 19.500000886614163
+    },
+    "pass_19p5": true
+   },
+   {
+    "name": "S2",
+    "az_deg": 27.0,
+    "el_deg": -28.0,
+    "ray_dir": [
+     0.7867120657537188,
+     0.40084981892585414,
+     -0.4694715627858908
+    ],
+    "note": "back-left, between the wall end and the slot; replaces stock P2",
+    "ball_center_bedded": [
+     -62.816128790360054,
+     -82.2661970268671,
+     10.666155681425415
+    ],
+    "ball_center_fresh": [
+     -62.934135600223115,
+     -82.32632449970598,
+     10.736576415843299
+    ],
+    "dist_from_trackball_center_bedded": 19.500000000000004,
+    "dist_from_trackball_center_fresh": 19.350000000000005,
+    "mesh_measured": {
+     "t_floor": 23.34999982475943,
+     "washer_bore_dia": 8.449835187944373,
+     "cap_bore_dia": 8.949796975448686,
+     "t_step": 17.850000378982084,
+     "implied_ball_center_t_fresh": 19.34999982475943,
+     "implied_ball_center_t_bedded": 19.499999824759428
+    },
+    "pass_19p5": true
+   },
+   {
+    "name": "S3",
+    "az_deg": 290.0,
+    "el_deg": -32.0,
+    "ray_dir": [
+     0.29004953139448153,
+     -0.7969045380297319,
+     -0.5299192642332049
+    ],
+    "note": "front, just under the low front rim; replaces stock P3",
+    "ball_center_bedded": [
+     -72.50104821036518,
+     -105.62240698750102,
+     9.487425503202791
+    ],
+    "ball_center_fresh": [
+     -72.54455564007435,
+     -105.50287130679658,
+     9.56691339283777
+    ],
+    "dist_from_trackball_center_bedded": 19.499999999999993,
+    "dist_from_trackball_center_fresh": 19.35000000000001,
+    "mesh_measured": {
+     "t_floor": 23.350000417048562,
+     "washer_bore_dia": 8.44979183433131,
+     "cap_bore_dia": 8.94978695310358,
+     "t_step": 17.850000500126708,
+     "implied_ball_center_t_fresh": 19.350000417048562,
+     "implied_ball_center_t_bedded": 19.50000041704856
+    },
+    "pass_19p5": true
+   }
+  ],
+  "contact_spread": {
+   "S1-S2": {
+    "azimuth_deg": 141.0,
+    "angle_3d_deg": 115.0546329541859
+   },
+   "S1-S3": {
+    "azimuth_deg": 122.0,
+    "angle_3d_deg": 100.56427657874576
+   },
+   "S2-S3": {
+    "azimuth_deg": 97.0,
+    "angle_3d_deg": 80.9365322956445
+   }
+  },
+  "contact_spread_pass": true,
+  "all_below_equator": true,
+  "contact_forces_x_weight": {
+   "S1": 0.8379202981939338,
+   "S2": 0.7348746551175787,
+   "S3": 0.5677786176458577
+  },
+  "gravity_stable": true,
+  "trackball_center_bedded": [
+   -78.15701407255757,
+   -90.08276849592126,
+   19.820851155750287
+  ],
+  "trackball_center_fresh": [
+   -78.14550942350755,
+   -90.1035246158604,
+   20.13760108135639
+  ],
+  "trackball_rise_when_fresh": [
+   0.011504649050024796,
+   -0.020756119939136397,
+   0.3167499256061035
+  ],
+  "trackball_center_vs_stock_derived": 0.0,
+  "trackball_center_vs_bowl_fit_center": 0.3123422573981205,
+  "trackball_case_min_gap_bedded": 0.36641166083592225,
+  "trackball_case_min_gap_at_bedded": {
+   "point": [
+    -95.03358223564845,
+    -89.32619928292908,
+    17.921101155750286
+   ],
+   "az_el": [
+    177.43317370381052,
+    -6.416205246408829
+   ]
+  },
+  "trackball_case_penetration_mm3_bedded": 0.0,
+  "trackball_case_clearance_pass_bedded": true,
+  "trackball_case_min_gap_fresh": 0.38708808104614434,
+  "trackball_case_min_gap_at_fresh": {
+   "point": [
+    -95.01290581543823,
+    -87.99070030821346,
+    19.97355108135639
+   ],
+   "az_el": [
+    172.86026879223112,
+    -0.5529128539655491
+   ]
+  },
+  "trackball_case_penetration_mm3_fresh": 0.0,
+  "trackball_case_clearance_pass_fresh": true,
+  "caps": {
+   "fresh": {
+    "cap_underside_to_ball_min": 0.3125657912962083,
+    "ball_radius_at_cap_plane": 2.0,
+    "hole_radial_clearance": 0.20000000000000018,
+    "cap_top_to_trackball_min": 0.4909283187215223,
+    "pass_": true
+   },
+   "bedded": {
+    "cap_underside_to_ball_min": 0.4625657912962069,
+    "ball_radius_at_cap_plane": 1.878163997099296,
+    "hole_radial_clearance": 0.32183600290070413,
+    "cap_top_to_trackball_min": 0.34295399543562155,
+    "pass_": true
+   }
+  },
+  "cap_pass": true,
+  "added_volume_mm3": 982.66142937939,
+  "removed_volume_mm3": 281.1727472801778,
+  "added_material_bounds": [
+   [
+    -102.18991088867188,
+    -112.62745666503906,
+    2.0
+   ],
+   [
+    -55.79603576660156,
+    -74.57434844970703,
+    30.518651962280273
+   ]
+  ],
+  "added_material_zmin": 2.4385695457458496,
+  "added_material_zmin_pass": true,
+  "stray_modifications": [],
+  "modifications_confined_pass": true,
+  "protected_regions": {
+   "sensor_window_bore": {
+    "bounds": [
+     [
+      -84.94864654541016,
+      -97.23200988769531,
+      1.899999976158142
+     ],
+     [
+      -71.04865264892578,
+      -83.33201599121094,
+      3.4200000762939453
+     ]
+    ],
+    "modified_volume_mm3": 0.0,
+    "pass_": true
+   },
+   "base_ring_and_screw_ears": {
+    "bounds": [
+     [
+      64.49864959716797,
+      -101.28201293945312,
+      1.899999976158142
+     ],
+     [
+      89.99864959716797,
+      -79.28201293945312,
+      3.299999952316284
+     ]
+    ],
+    "modified_volume_mm3": 0.0,
+    "pass_": true
+   },
+   "hex_pocket": {
+    "bounds": [
+     [
+      -97.0,
+      -93.0,
+      17.5
+     ],
+     [
+      -95.0,
+      -87.5,
+      25.5
+     ]
+    ],
+    "modified_volume_mm3": 1.7203759120990963e-08,
+    "pass_": true
+   },
+   "finger_slot": {
+    "bounds": [
+     [
+      -74.28755187988281,
+      -76.04420471191406,
+      10.788119316101074
+     ],
+     [
+      -65.82750701904297,
+      -70.34111022949219,
+      24.152334213256836
+     ]
+    ],
+    "modified_volume_mm3": 5.989609549080418e-10,
+    "pass_": true
+   },
+   "pillar_exterior": {
+    "bounds": [
+     [
+      -111.0,
+      -105.0,
+      1.899999976158142
+     ],
+     [
+      -96.5,
+      -76.0,
+      37.0
+     ]
+    ],
+    "modified_volume_mm3": 0.0,
+    "pass_": true
+   }
+  },
+  "protected_regions_pass": true,
+  "backing": [
+   {
+    "name": "S1",
+    "backing_solid": true,
+    "backing_fraction": 1.0,
+    "bore_open": true
+   },
+   {
+    "name": "S2",
+    "backing_solid": true,
+    "backing_fraction": 1.0,
+    "bore_open": true
+   },
+   {
+    "name": "S3",
+    "backing_solid": true,
+    "backing_fraction": 1.0,
+    "bore_open": true
+   }
+  ],
+  "backing_pass": true,
+  "overall_pass": true
+ },
+ "coupon": {
+  "height": 7.649999999999999,
+  "cap_bore_depth": 1.0,
+  "washer_bore_depth": 6.5,
+  "backing": 1.1499999999999986
+ },
+ "case_step": "keyball_ptfe_seat_case_left.step",
+ "case_step_volume_mm3": 9788.528657976325,
+ "case_step_size_MB": 54.456076,
+ "build_seconds": 217.45452404022217
+}
